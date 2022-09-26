@@ -13,6 +13,8 @@ describe('Test Api Gateway V1 integration', () => {
             ...evt.requestContext.http,
             method: 'GET',
           },
+          requestId: 'test-req-id',
+          stage: 'test-stage',
         },
         cookies: ['SESSIONID=1293812hjas', 'VISITED=yes'],
         rawPath: '/v1/providers',
@@ -40,6 +42,15 @@ describe('Test Api Gateway V1 integration', () => {
       it('Should convert the body from string to buffer', async () => {
         expect(transformedRequest.body).not.toBeNull();
         expect(transformedRequest.body.toString()).toEqual(event.body);
+      });
+
+      it('Should have the requestId and stage passed as x-headers', async () => {
+        expect(transformedRequest.headers).toEqual(
+          expect.objectContaining({
+            'x-stage': 'test-stage',
+            'x-request-id': 'test-req-id',
+          }),
+        );
       });
     });
 

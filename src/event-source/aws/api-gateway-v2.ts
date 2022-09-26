@@ -29,6 +29,10 @@ function getRequestValuesFromApiGatewayEvent({
     body = Buffer.from('', 'utf-8');
   }
 
+  // Pass common api gateway specific metadata as headers
+  headers['x-request-id'] = event.requestContext.requestId;
+  headers['x-stage'] = event.requestContext.stage;
+
   return {
     path,
     method: event.requestContext.http.method || 'GET',
