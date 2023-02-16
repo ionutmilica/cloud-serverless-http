@@ -4,6 +4,7 @@ import { ServerlessResponse } from './response';
 
 import * as gw1 from './event-source/aws/api-gateway-v1';
 import * as gw2 from './event-source/aws/api-gateway-v2';
+import * as inl from './event-source/aws/legacy-internal-lambda';
 
 // Shape used to explain what we expect from a lambda call request payload.
 // - event: entry which differ based on the invoker (api gateway, edge, cognito, internal lambda)
@@ -59,6 +60,8 @@ export function getEventSource(eventSourceType: EventSourceTypes): EventSource {
       return gw1;
     case EventSourceTypes.ApiGatewayV2:
       return gw2;
+    case EventSourceTypes.InternalLambda:
+      return inl;
     default:
       throw new Error("Couldn't detect valid event source.");
   }
