@@ -5,8 +5,7 @@ import { makeV1Event } from '../../../__jest-utils__/events/v1';
 describe('Test Api Gateway V1 integration', () => {
   describe('Test getRequest', () => {
     describe('Check Authorization logic', () => {
-      // TODO: Decide about the behaviour that we want here
-      it.skip('Should overwrite authorization header if using custom authorizer', async () => {
+      it('Should overwrite authorization header if using custom authorizer', async () => {
         const transformedRequest = getRequest({
           event: makeV1Event((evt) => ({
             ...evt,
