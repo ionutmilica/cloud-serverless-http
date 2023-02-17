@@ -47,6 +47,6 @@
     "cjs",
     "types",
     "config",
-    "!tsconfig.tsbuildinfo"
+    "!**/tsconfig.tsbuildinfo"
   ]
 }
