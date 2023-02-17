@@ -37,6 +37,15 @@ function getRequestValuesFromApiGatewayEvent({
     body = Buffer.from('', 'utf-8');
   }
 
+  // Support override of the authorization token from the authorizer for some legacy apps
+  if (
+    event.requestContext.authorizer?.authorization &&
+    typeof event.requestContext.authorizer?.authorization === 'string' &&
+    event.requestContext.authorizer?.authorization !== ''
+  ) {
+    headers['authorization'] = `Bearer ${event.requestContext.authorizer?.authorization}`;
+  }
+
   // Pass common api gateway specific metadata as headers
   headers['x-request-id'] = event.requestContext.requestId;
   headers['x-stage'] = event.requestContext.stage;
